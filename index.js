@@ -73,7 +73,7 @@ function doRequest(cmd, opts, func) {
   var id = util.createUniqueID();
   syncRequestCallbackMap[id] = func;
   try {
-    request[requestMethod](id, cmd, util.jsonEncode(opts));
+    request && request[requestMethod] && request[requestMethod](id, cmd, util.jsonEncode(opts));
   } catch(e) {
     throw new Error("The client doesn't support request method!");
   }
@@ -87,8 +87,9 @@ function doRequest(cmd, opts, func) {
  */
 function getSyncFun(cmd, opts, func) {
   var ars = Array.prototype.slice.apply(arguments, [1, 3]);
-  if(ars.length == 0) {
-    return throw new Error('illegal arguments length!');
+  if(!ars || !ars.length || ars.length <= 1) {
+    throw new Error('illegal arguments length!');
+    return;
   }
   func = (ars.length == 1) ? opts : (func || emptyFun);
   opts = (ars.length == 1) ? {} : opts;
@@ -172,6 +173,9 @@ asyncRequest.once = function(cmd, func) {
  * @private
  */
 asyncRequest._registerApi = function(cmd) {
+  if(!request) {
+    throw new Error('You need to initialize the request constant by use setHost');
+  }
   var cmd = util.camelCase(cmd);
   bindFunc(cmd, getSyncFun);
 }
