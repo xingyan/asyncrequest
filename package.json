@@ -4,7 +4,7 @@
   "description": "a async-request between javascript & (flash/client/etc.)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,7 @@
   "dependencies": {
     "pc-game-util": "0.0.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^2.2.4"
+  }
 }
