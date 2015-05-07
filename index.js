@@ -49,10 +49,10 @@ var isString = function(source) {
  * @param cmd
  * @param func
  */
-function bindFunc(cmd, func) {
-  asyncRequest[cmd] = (function(_cmd) {
+function bindFunc(cmd, _cmd, func) {
+  asyncRequest[_cmd] = (function(__cmd) {
     return function() {
-      var args = [_cmd],
+      var args = [__cmd],
         i = 0,
         len = arguments.length;
       for ( ; i < len; i++) {
@@ -176,8 +176,8 @@ asyncRequest._registerApi = function(cmd) {
   if(!request) {
     throw new Error('You need to initialize the request constant by use setHost');
   }
-  var cmd = util.camelCase(cmd);
-  bindFunc(cmd, getSyncFun);
+  var _cmd = util.camelCase(cmd);
+  bindFunc(cmd, _cmd, getSyncFun);
 }
 
 /**
