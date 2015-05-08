@@ -1,6 +1,6 @@
 {
   "name": "asyncrequest",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "description": "a async-request between javascript & (flash/client/etc.)",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/GameHot/pc-game-asyncrequest",
   "dependencies": {
-    "pc-game-util": "0.0.2"
+    "pc-game-util": "^0.0.3"
   },
   "devDependencies": {
     "mocha": "^2.2.4"

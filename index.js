@@ -49,10 +49,10 @@ var isString = function(source) {
  * @param cmd
  * @param func
  */
-function bindFunc(cmd, func) {
-  asyncRequest[cmd] = (function(_cmd) {
+function bindFunc(cmd, _cmd, func) {
+  asyncRequest[_cmd] = (function(__cmd) {
     return function() {
-      var args = [_cmd],
+      var args = [__cmd],
         i = 0,
         len = arguments.length;
       for ( ; i < len; i++) {
@@ -70,9 +70,12 @@ function bindFunc(cmd, func) {
  * @param func
  */
 function doRequest(cmd, opts, func) {
-  var id = util.createUniqueID();
+  var id = util.createUniqueID('');
   syncRequestCallbackMap[id] = func;
   try {
+    if(isString(request)) {
+      request = document.getElementById(request);
+    }
     request && request[requestMethod] && request[requestMethod](id, cmd, util.jsonEncode(opts));
   } catch(e) {
     throw new Error("The client doesn't support request method!");
@@ -87,9 +90,9 @@ function doRequest(cmd, opts, func) {
  */
 function getSyncFun(cmd, opts, func) {
   var ars = Array.prototype.slice.apply(arguments, [1, 3]);
-  if(!ars || !ars.length || ars.length <= 1) {
-    throw new Error('illegal arguments length!');
-    return;
+  if(!ars || !ars.length) {
+    opts = {};
+    func = emptyFun;
   }
   func = (ars.length == 1) ? opts : (func || emptyFun);
   opts = (ars.length == 1) ? {} : opts;
@@ -100,10 +103,9 @@ function getSyncFun(cmd, opts, func) {
  * @desc 接受异步回调
  * @param result {String}
  */
-function asyncDispatch(result) {
+function asyncDispatch(id, result) {
   var handler,
-    _result,
-    id;
+    _result;
   if(isString(result)) {
     try {
       _result = eval("(" + result + ")");
@@ -113,7 +115,7 @@ function asyncDispatch(result) {
   } else {
     _result = result
   }
-  id = _result ? _result.id : null;
+  id = (id != undefined && id != null) ? id : (_result ? _result.id : null);
   handler = syncRequestCallbackMap[id];
   if(!handler)   return;
   if(handler && typeof(handler) == "function") {
@@ -122,7 +124,7 @@ function asyncDispatch(result) {
 }
 
 var asyncRequest = {
-  __async__dispatch: asyncDispatch
+  onSync: asyncDispatch
 };
 
 /**
@@ -176,8 +178,8 @@ asyncRequest._registerApi = function(cmd) {
   if(!request) {
     throw new Error('You need to initialize the request constant by use setHost');
   }
-  var cmd = util.camelCase(cmd);
-  bindFunc(cmd, getSyncFun);
+  var _cmd = util.camelCase(cmd);
+  bindFunc(cmd, _cmd, getSyncFun);
 }
 
 /**
