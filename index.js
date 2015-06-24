@@ -119,7 +119,7 @@ function asyncDispatch(id, result) {
   handler = syncRequestCallbackMap[id];
   if(!handler)   return;
   if(handler && typeof(handler) == "function") {
-    handler(result);
+    handler(_result);
   }
 }
 
@@ -183,14 +183,21 @@ asyncRequest._registerApi = function(cmd) {
 }
 
 /**
- * @desc 初始化客户端请求对象
+ * @desc 更新客户端请求对象
  * @param host
  * @param method
  */
 asyncRequest.setHost = function(host, method) {
-  if(request) return;
   request = host;
   requestMethod = method;
+}
+
+/**
+ * @desc 获取当前客户端请求对象
+ * @returns {*}
+ */
+asyncRequest.getHost = function() {
+  return request;
 }
 
 module.exports = asyncRequest;
