@@ -1,6 +1,6 @@
 {
   "name": "asyncrequest",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "a async-request between javascript & (flash/client/etc.)",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/GameHot/pc-game-asyncrequest.git"
+    "url": "https://github.com/xingyan/asyncrequest.git"
   },
   "keywords": [
     "javascript",
@@ -18,9 +18,9 @@
   "author": "xingyan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GameHot/pc-game-asyncrequest/issues"
+    "url": "https://github.com/xingyan/asyncrequest/issues"
   },
-  "homepage": "https://github.com/GameHot/pc-game-asyncrequest",
+  "homepage": "https://github.com/xingyan/asyncrequest.git",
   "dependencies": {
     "pc-game-util": "^0.0.4"
   },
