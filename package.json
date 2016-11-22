@@ -1,6 +1,6 @@
 {
   "name": "asyncrequest",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "a async-request between javascript & (flash/client/etc.)",
   "main": "index.js",
   "scripts": {

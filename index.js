@@ -89,13 +89,12 @@ function doRequest(cmd, opts, func) {
  * @param func
  */
 function getSyncFun(cmd, opts, func) {
-  var ars = Array.prototype.slice.apply(arguments, [1, 3]);
-  if(!ars || !ars.length) {
+  opts = opts || {};
+  func = func || emptyFun;
+  if((typeof opts).toLocaleLowerCase() == 'function') {
+    func = opts;
     opts = {};
-    func = emptyFun;
   }
-  func = (ars.length == 1) ? opts : (func || emptyFun);
-  opts = (ars.length == 1) ? {} : opts;
   doRequest(cmd, opts, func);
 }
 
